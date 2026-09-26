@@ -1,5 +1,26 @@
+import ollama from "ollama";
+
+export const embeddingModel = process.env.EMBEDDING_MODEL || "nomic-embed-text";
+
 export interface EmbeddingVector {
   values: number[];
+}
+
+export async function embedTexts(texts: string[]): Promise<number[][]> {
+  if (texts.length === 0) {
+    return [];
+  }
+
+  const response = await ollama.embed({
+    model: embeddingModel,
+    input: texts,
+  });
+
+  if (response.embeddings.length !== texts.length) {
+    throw new Error("Ollama returned an unexpected number of embeddings.");
+  }
+
+  return response.embeddings;
 }
 
 export function tokenizeText(text: string): string[] {

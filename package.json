@@ -18,12 +18,14 @@
     "express": "^5.2.1",
     "multer": "^2.4.0",
     "ollama": "^0.6.3",
+    "pg": "^8.16.3",
     "uuid": "^14.0.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/multer": "^2.2.0",
     "@types/node": "^26.6.3",
+    "@types/pg": "^8.15.5",
     "ts-node": "^10.9.2",
     "typescript": "^7.0.2"
   }

@@ -1,8 +1,28 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.embeddingModel = void 0;
+exports.embedTexts = embedTexts;
 exports.tokenizeText = tokenizeText;
 exports.buildEmbeddings = buildEmbeddings;
 exports.cosineSimilarity = cosineSimilarity;
+const ollama_1 = __importDefault(require("ollama"));
+exports.embeddingModel = process.env.EMBEDDING_MODEL || "nomic-embed-text";
+async function embedTexts(texts) {
+    if (texts.length === 0) {
+        return [];
+    }
+    const response = await ollama_1.default.embed({
+        model: exports.embeddingModel,
+        input: texts,
+    });
+    if (response.embeddings.length !== texts.length) {
+        throw new Error("Ollama returned an unexpected number of embeddings.");
+    }
+    return response.embeddings;
+}
 function tokenizeText(text) {
     return text
         .toLowerCase()
