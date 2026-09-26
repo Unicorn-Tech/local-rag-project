@@ -36,3 +36,10 @@ The first run creates the pgvector tables and indexes the document. Later runs r
 The schema currently expects 768-dimensional vectors from `nomic-embed-text`. If you select an embedding model with a different output dimension, update the `vector(768)` definition and the dimension validation in `src/rag/vectorStore.ts`, then recreate/reindex the table.
 
 The existing unit tests for chunking and the original lexical retriever do not require PostgreSQL. The application itself requires a running PostgreSQL/pgvector service and Ollama.
+
+
+## Project Description
+
+This project is a local, educational retrieval-augmented generation (RAG) application for asking questions about an insurance policy. It reads `src/data/insurance.txt`, splits the policy into overlapping chunks, and generates semantic embeddings with Ollama's `nomic-embed-text` model. The chunks and vectors are stored in PostgreSQL using pgvector.
+
+For each question, the app embeds the query, retrieves the most relevant policy chunks using cosine similarity, and passes that context to Ollama's `llama3.2` model to generate a grounded answer. Unchanged source documents are not re-embedded on every run. The project demonstrates a basic local RAG workflow; it is intended for learning and is not a production insurance decision system.
